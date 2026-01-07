@@ -102,18 +102,6 @@
       color: #b02a37;
       font-weight: bold;
     }
-
-    .boton-link {
-      display: block;
-      margin-top: 18px;
-      padding: 14px;
-      font-size: 18px;
-      font-weight: bold;
-      background-color: #198754;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-    }
   </style>
 </head>
 <body>
@@ -161,7 +149,6 @@
       const colDNI = columnas[0];
       const colApellido = columnas[1];
       const colTexto = columnas[2];
-      const colLink = columnas[3];
 
       const resultados = datos.filter(d =>
         d[colDNI] === valor ||
@@ -169,15 +156,9 @@
       );
 
       if (resultados.length === 0) {
-        const match = datos[0][colLink]?.match(/https?:\/\/\S+/);
-        const url = match ? match[0] : "#";
-
         resultadoDiv.innerHTML = `
           <div class="tarjeta-error">
             <p>No se encuentra afiliado/a</p>
-            <a class="boton-link" href="${url}" target="_blank">
-              Toque aquí para afiliarse
-            </a>
           </div>
         `;
         return;
