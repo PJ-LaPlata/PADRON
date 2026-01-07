@@ -17,116 +17,121 @@
         to right,
         #ffffff 0%,
         #ffffff 50%,
-        #7EC8E3 50%,
-        #7EC8E3 100%
+        #1AAFD9 50%,
+        #1AAFD9 100%
       );
     }
 
     .header {
-      text-align: center;
-      padding: 25px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 10px;
     }
 
     .header img {
-      height: 120px;
+      height: 110px;
       width: auto;
-      margin-bottom: 10px;
     }
 
     .header h1 {
-      font-size: 28px;
+      color: black;
+      font-size: 26px;
       margin: 0;
-      padding-bottom: 6px;
-      border-bottom: 2px solid rgba(126, 200, 227, 0.4);
+      text-align: center;
+      text-shadow: 0 2px 0 rgba(26,175,217,0.35);
     }
 
     .contenedor {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
       text-align: center;
+      max-width: 600px;
+      width: 90%;
+      margin: 0 auto;
+      padding-top: 20px;
     }
 
     label {
       font-size: 18px;
       display: block;
-      margin-bottom: 10px;
-      padding-bottom: 4px;
-      border-bottom: 2px solid rgba(126, 200, 227, 0.3);
+      margin-bottom: 12px;
+      color: black;
+      text-shadow: 0 2px 0 rgba(26,175,217,0.35);
     }
 
     input {
-      width: 100%;
-      max-width: 400px;
       padding: 12px;
       font-size: 18px;
-      border: 1px solid #000;
-      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
       text-align: center;
+      border: 1px solid black;
+      border-radius: 8px;
       margin-bottom: 10px;
+      outline: none;
     }
 
     button {
-      width: 100%;
-      max-width: 400px;
-      padding: 12px;
+      padding: 12px 20px;
       font-size: 18px;
-      border-radius: 8px;
+      cursor: pointer;
       border: none;
+      border-radius: 8px;
       background-color: #0b5ed7;
       color: white;
-      cursor: pointer;
+      width: 100%;
+      max-width: 400px;
     }
 
     #resultado {
       margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
     }
 
     .tarjeta {
-      background: white;
-      padding: 20px;
+      background-color: white;
+      padding: 22px;
       border-radius: 14px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-      margin-bottom: 15px;
+      width: 100%;
+      max-width: 500px;
       font-size: 18px;
     }
 
     .tarjeta p {
-      margin: 8px 0;
-      padding-bottom: 4px;
-      border-bottom: 2px solid rgba(126, 200, 227, 0.25);
+      text-shadow: 0 2px 0 rgba(26,175,217,0.25);
     }
 
     .tarjeta-error {
-      background: white;
-      padding: 20px;
+      background-color: white;
+      padding: 22px;
       border-radius: 14px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
       font-size: 18px;
+      color: #b02a37;
       font-weight: bold;
-    }
-
-    .tarjeta-error a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 16px;
-      background: #0b5ed7;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
+      text-shadow: 0 2px 0 rgba(26,175,217,0.25);
     }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <img src="banner.jpg" alt="Logo">
+    <img src="logo.jpg" alt="Logo PJ">
     <h1>Padrón PJ La Plata</h1>
   </div>
 
   <div class="contenedor">
-    <label for="busqueda">Ingrese DNI o Apellido</label>
-    <input id="busqueda" type="text" placeholder="DNI o Apellido">
+    <label for="busqueda">
+      Ingrese DNI o Apellido
+    </label>
+
+    <input type="text" id="busqueda" placeholder="DNI o Apellido">
     <button onclick="buscar()">Buscar</button>
 
     <div id="resultado"></div>
@@ -137,43 +142,48 @@
 
     Papa.parse("data.csv", {
       download: true,
+      header: true,
       complete: function(res) {
         datos = res.data;
       }
     });
 
-    document.getElementById("busqueda").addEventListener("keypress", e => {
+    document.getElementById("busqueda").addEventListener("keypress", function(e) {
       if (e.key === "Enter") buscar();
     });
 
     function buscar() {
       const valor = document.getElementById("busqueda").value.trim().toUpperCase();
-      const resultado = document.getElementById("resultado");
-      resultado.innerHTML = "";
+      const resultadoDiv = document.getElementById("resultado");
+      resultadoDiv.innerHTML = "";
 
-      if (!valor) return;
+      if (!valor || datos.length === 0) return;
 
-      const encontrados = datos.filter(fila =>
-        fila[0] === valor ||
-        (fila[1] && fila[1].toUpperCase().includes(valor))
+      const columnas = Object.keys(datos[0]);
+      const colDNI = columnas[0];
+      const colApellido = columnas[1];
+      const colTexto = columnas[2];
+
+      const resultados = datos.filter(d =>
+        d[colDNI] === valor ||
+        d[colApellido]?.toUpperCase().includes(valor)
       );
 
-      if (encontrados.length === 0) {
-        resultado.innerHTML = `
+      if (resultados.length === 0) {
+        resultadoDiv.innerHTML = `
           <div class="tarjeta-error">
-            No se encuentra afiliado/a.<br>
-            <a href="${datos[0][3]}" target="_blank">Toque aquí para afiliarse</a>
+            <p>No se encuentra afiliado/a</p>
           </div>
         `;
         return;
       }
 
-      encontrados.forEach(fila => {
-        resultado.innerHTML += `
+      resultados.forEach(fila => {
+        resultadoDiv.innerHTML += `
           <div class="tarjeta">
-            <p><strong>${fila[1]}</strong></p>
-            <p>DNI: ${fila[0]}</p>
-            <p>${fila[2]}</p>
+            <p><strong>${fila[colApellido]}</strong></p>
+            <p>DNI: ${fila[colDNI]}</p>
+            <p>${fila[colTexto]}</p>
           </div>
         `;
       });
