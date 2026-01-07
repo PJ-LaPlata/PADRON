@@ -22,6 +22,14 @@
       );
     }
 
+    .texto-contorno {
+      text-shadow:
+        -1px -1px 0 rgba(26, 175, 217, 0.35),
+         1px -1px 0 rgba(26, 175, 217, 0.35),
+        -1px  1px 0 rgba(26, 175, 217, 0.35),
+         1px  1px 0 rgba(26, 175, 217, 0.35);
+    }
+
     .header {
       display: flex;
       flex-direction: column;
@@ -63,10 +71,9 @@
       width: 100%;
       max-width: 400px;
       text-align: center;
-      border: 1px solid black;
+      border: 1px solid #000000;
       border-radius: 8px;
       margin-bottom: 10px;
-      outline: none;
     }
 
     button {
@@ -99,10 +106,6 @@
       font-size: 18px;
     }
 
-    .tarjeta p {
-      text-shadow: 0 2px 0 rgba(26,175,217,0.25);
-    }
-
     .tarjeta-error {
       background-color: white;
       padding: 22px;
@@ -113,7 +116,6 @@
       font-size: 18px;
       color: #b02a37;
       font-weight: bold;
-      text-shadow: 0 2px 0 rgba(26,175,217,0.25);
     }
   </style>
 </head>
@@ -121,11 +123,11 @@
 
   <div class="header">
     <img src="logo.jpg" alt="Logo PJ">
-    <h1>Padrón PJ La Plata</h1>
+    <h1 class="texto-contorno">Padrón PJ La Plata</h1>
   </div>
 
   <div class="contenedor">
-    <label for="busqueda">
+    <label for="busqueda" class="texto-contorno">
       Ingrese DNI o Apellido
     </label>
 
@@ -190,4 +192,3 @@
 
 </body>
 </html>
-
