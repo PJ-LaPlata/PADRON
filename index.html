@@ -19,7 +19,7 @@
       min-height: 100vh;
       background: linear-gradient(
         to right,
-               #ffffff 0%,
+        #ffffff 0%,
         #ffffff 50%,
         #1AAFD9 50%,
         #1494B8 100%
@@ -120,37 +120,6 @@
       color: #b02a37;
       font-weight: bold;
     }
-
-    /* ===== SOPORTE TÉCNICO ===== */
-    .soporte {
-      position: fixed;
-      bottom: 12px;
-      left: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      opacity: 0.45;
-      transition: opacity 0.2s ease;
-      z-index: 1000;
-    }
-
-    .soporte:hover {
-      opacity: 0.9;
-    }
-
-    .soporte a {
-      text-decoration: none;
-      color: #000;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .soporte img {
-      width: 16px;
-      height: 16px;
-    }
   </style>
 </head>
 <body>
@@ -167,14 +136,6 @@
     <button onclick="buscar()">Buscar</button>
 
     <div id="resultado"></div>
-  </div>
-
-  <!-- SOPORTE TÉCNICO -->
-  <div class="soporte">
-    <a href="https://github.com/larrrus" target="_blank" title="Soporte técnico">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
-      <span>Soporte técnico</span>
-    </a>
   </div>
 
   <script>
